@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings</title>
+</head>
+
+<body>
+  <header>
+    <h1>Settings</h1>
+    <nav>
+      <!-- Link to other pages for the web app -->
+    </nav>
+  </header>
+
+  <main>
+    <form id="settings-form">
+
+      <section>
+        <h2>Account Settings</h2>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username">
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email">
+      </section>
+
+      <section>
+        <h2>Display Settings</h2>
+        <label for="font-size">Font size:</label>
+        <select name="font-size" id="font-size">
+          <option value="small">Small</option>
+          <option value="medium">Medium</option>
+          <option value="large">Large</option>
+        </select>
+      </section>
+      <button type="submit">Save Changes</button>
+    </form>
+    <form id="logout-form" action="/logout" method="post">
+      <button type="submit">Logout</button>
+    </form>
+  </main>
+  <footer>
+    <!-- Fill with any relevant copyright information (if there is any) -->
+  </footer>
+</body>
+
+
