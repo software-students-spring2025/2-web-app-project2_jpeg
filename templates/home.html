@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -19,6 +20,7 @@
             align-items: center;
             height: 100vh;
             flex-direction: column;
+            overflow: hidden;
         }
 
         .container {
@@ -28,6 +30,10 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             width: 500px;
             text-align: center;
+            max-height: 80vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
 
         input, button {
@@ -42,6 +48,8 @@
             background-color: #5C6BC0;
             color: white;
             cursor: pointer;
+            margin: 0 auto;
+            display: block;
         }
 
         button:hover {
@@ -51,6 +59,12 @@
         .episode-list {
             text-align: left;
             margin-top: 20px;
+            overflow-y: auto;
+            height: 400px;
+            flex-grow: 1;
+            overflow-y: auto;
+            max-height: 50vh;
+            padding-right: 10px;
         }
 
         .episode-item {
@@ -80,12 +94,16 @@
             <div class="episode-item">
                 <b>Title:</b> {{ show.title }}<br>
                 <b>Genre:</b> {{ show.genre }}<br>
+                <b>Season:</b> {{ show.season}}<br>
                 <b>Episode:</b> {{ show.episode }}<br>
                 <b>Rating:</b> {{ show.rating }}<br>
                 <b>Tags:</b> {{ show.tags | join(', ') }}<br>
                 <b>Date:</b> {{ show.date }}<br>
                 <b>Comment:</b> "{{ show.comment }}"
-
+                <br />
+                <a href="{{ url_for('edit', post_id=show._id) }}">
+                    <button>Edit</button>
+                </a>
                 <form action="{{ url_for('delete') }}" method="POST" style="margin-top:10px;">
                     <input type="hidden" name="show_id" value="{{ show._id }}">
                     <button type="submit">Delete</button>
@@ -96,6 +114,9 @@
         <h3>Menu</h3>
         <a href="{{ url_for('add') }}">
             <button>Add New Episode</button>
+        </a>
+        <a href="{{ url_for('settings') }}">
+            <button>Settings</button>
         </a>
         </div>
 

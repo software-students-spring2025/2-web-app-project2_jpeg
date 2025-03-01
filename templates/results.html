@@ -37,6 +37,17 @@
             border: 1px solid #ccc;
             border-radius: 4px;
         }
+        .episode-list {
+            text-align: left;
+            margin-top: 20px;
+            overflow-y: auto;
+            height: 400px;
+        }
+
+        .episode-item {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
 
         button {
             padding: 10px 15px;
@@ -55,27 +66,41 @@
             margin-top: 20px;
             text-align: left;
         }
+        .back-home {
+            margin: 0 auto;
+            display: block;
+        }
 
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Search Results</h1>
-        {% if episodes %}
-            <ul>
-                {% for episode in episodes %}
-                    <li>
-                        <strong>{{ episode.title }}</strong><br>
-                        Genre: {{ episode.genre }}<br>
-                        Season: {{ episode.season }}<br>
-                        Episode: {{ episode.episode }}<br>
-                        Rating: {{ episode.rating }}<br>
-                        Tags: {{ episode.tags | join(', ') }}<br>
-                        Date: {{ episode.date}}<br>
-                        Comment: {{ episode.comment }}<br>
-                    </li>
+        {% if all_episodes %}
+            <div class="episode-list">
+                {% for show in all_episodes %}
+                <div class="episode-item">
+                    <b>Title:</b> {{ show.title }}<br>
+                    <b>Genre:</b> {{ show.genre }}<br>
+                    <b>Seasons:</b> {{ show.seasons }}<br>
+                    <b>Rating:</b> {{ show.rating }}<br>
+                    <b>Tags:</b> {{ show.tags | join(', ') }}<br>
+                    <b>Date:</b> {{ show.date }}<br>
+
+                    <form action="{{ url_for('add') }}" method="GET" style="margin-top:10px;">
+                        <input type="hidden" name="show_id" value="{{ show._id }}">
+                        <input type="hidden" name="title" value="{{ show.title }}">
+                        <input type="hidden" name="genre" value="{{ show.genre }}">
+                        <input type="hidden" name="tags" value="{{ show.tags | join(', ') }}">
+                        <button type="submit">Add Episode</button>
+                    </form>
+                    
+                </div>
                 {% endfor %}
-            </ul>
+            </div>
+            <form action="/" method="get">
+                <button type="submit">Back to Home</button>
+            </form>
         {% else %}
             <p>No episodes found matching your search criteria.</p>
         {% endif %}

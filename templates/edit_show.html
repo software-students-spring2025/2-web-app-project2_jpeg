@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Episode</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        h1 {
+            color: #3f4b8a;
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #5C6BC0;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #3f4b8a;
+        }
+
+        footer {
+            margin-top: 20px;
+            padding: 10px;
+            font-size: 14px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Episode</h1>
+        <form action="{{ url_for('edit', post_id=show._id) }}" method="POST">
+            <label for="title">Show Title:</label>
+            <input type="text" id="title" name="title" value="{{ show.title }}" required>
+
+            <label for="genre">Genre:</label>
+            <input type="text" id="genre" name="genre" value="{{ show.genre }}" required>
+
+            <label for="season">Season:</label>
+            <input type="number" id="season" name="season" min="1" value="{{ show.season }}">
+
+            <label for="episode">Episode Number:</label>
+            <input type="number" id="episode" name="episode" min="1" value="{{ show.episode }}">
+
+            <label for="rating">Rating (1-5):</label>
+            <input type="number" id="rating" name="rating" min="1" max="5" value="{{ show.rating }}">
+
+            <label for="tags">Tags (comma-separated):</label>
+            <input type="text" id="tags" name="tags" value="{{ show.tags | join(', ') }}">
+
+            <label for="date">Date:</label>
+            <input type="text" id="date" name="date" value="{{ show.date }}" required>
+
+            <label for="comment">Comment:</label>
+            <input type="text" id="comment" name="comment" value="{{ show.comment }}">
+
+            <button type="submit">Save Changes</button>
+        </form>
+
+        <!-- Back to Home Button -->
+        <a href="{{ url_for('home') }}">
+            <button>Back to Home</button>
+        </a>
+    </div>
+</body>
+</html>
