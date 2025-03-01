@@ -106,14 +106,6 @@ def delete():
 def success():
     return "Episode added successfully!"
 
-@app.route("/settings", methods=["GET"])
-def settings():
-    return render_template("settings.html")
-
-@app.route("/logout", methods=['POST'])
-def logout():
-    return
-
 # main driver function
 if __name__ == '__main__':
     app.run(debug=True)
