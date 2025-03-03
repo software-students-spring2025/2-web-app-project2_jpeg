@@ -9,7 +9,6 @@ import certifi
 from flask_login import current_user, login_required
 import flask_login
 import flask
-#import hashlib
 import certifi
 import re
 import datetime
@@ -30,11 +29,8 @@ login_manager.login_view = "login"
 config = dotenv_values()
 app.config["DEBUG"] = os.getenv("DEBUG", "False") == "True"
 
-# app.config.from_mapping(config)
-
 #mongodb client
-client = pymongo.MongoClient(os.getenv("MONGO_URI"), ssl_ca_certs=certifi.where(), tls=True,
-    tlsCAFile=certifi.where())
+client = pymongo.MongoClient(os.getenv("MONGO_URI"), tlsCAFile=certifi.where())
 db = client[os.getenv("MONGO_DBNAME")]
 db_2 = client[os.getenv("MONGO_DBNAME_2")]
 tv_shows_collection = db.tv_shows
@@ -99,7 +95,6 @@ def home():
     
     user_episodes = db[current_user.id]
     ep_collection = user_episodes.find({}).sort("date", -1)
-    #episodes = db.tv_shows.find({}).sort("date", -1)
     return render_template("home.html", username=current_user.id, episodes=ep_collection)
 
 @app.route("/", methods=['GET', 'POST'])
@@ -138,7 +133,6 @@ def signup():
             flash("Username already exists", "danger")
             return redirect(url_for("signup")) #, "Username already exists", "danger"
 
-        #hashed_pw = hashlib.sha256(password).hexdigest()
         new_doc = db.users.insert_one({"username": username, "password": password})
         user_id = str(new_doc.inserted_id)
         return redirect(url_for("login")) #, message="Sign up successful! You can now log in."
@@ -157,8 +151,6 @@ def add():
         date = request.form.get("date")
         tags = request.form.get("tags").split(",")
         comment = request.form.get("comment") 
-
-        #episode = f"S{season}E{episode_num}" if season and episode_num else ""
 
         new_episode = {
             "title": title,
@@ -197,7 +189,6 @@ def search():
             ]
         }
         results = user_episodes.find(search_criteria)
-        #results = all_shows_collection.find(search_criteria)
         shows = [
             {
                 "id": str(show["_id"]),
@@ -244,6 +235,7 @@ def edit(post_id):
         episode_num = request.form.get("episode")
         rating = request.form.get("rating")
         tags = request.form.get("tags").split(",")
+        date = request.form.get("date")
         comment = request.form.get("comment")
 
         episode = f"S{season}E{episode_num}" if season and episode_num else ""
@@ -254,7 +246,7 @@ def edit(post_id):
             "episode": episode,
             "rating": int(rating or 0),
             "tags": [tag.strip() for tag in tags],
-            "date": datetime.datetime.utcnow(),  # Keep track of when the edit happened
+            "date": date,  
             "comment": comment,
         }
 
@@ -266,7 +258,14 @@ def edit(post_id):
 
 @app.route("/settings")
 def settings():
-    return render_template("settings.html")
+    user_doc = users.find_one({"_id": ObjectId(current_user.id)})    
+    if user_doc:
+        username = user_doc.get("username", "Unknown")
+        password = user_doc.get("password", "Not available")
+    else:
+        username = "Unknown"
+        password = "Not available"
+    return render_template("settings.html", username=username, password=password)
 
 @app.route("/success")
 def success():
