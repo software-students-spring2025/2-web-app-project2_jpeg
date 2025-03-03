@@ -98,7 +98,7 @@
                 </div>
                 {% endfor %}
             </div>
-            <form action="/" method="get">
+            <form action="{{ url_for('home') }}" method="get">
                 <button type="submit">Back to Home</button>
             </form>
         {% else %}
