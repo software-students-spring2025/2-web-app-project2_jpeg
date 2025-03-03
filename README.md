@@ -45,7 +45,7 @@ Instead of using MongoDB locally, we use MongoDB Atlas, which is a cloud-based d
 1. Go to [MongoDB Atlas](https://www.mongodb.com/products/platform/atlas-database) and sign in or create an account.
 2. Create a **new cluster**.
 3. Under **Database Access**, add a database user and password. Save these credentials.
-4. Under **Network Access**, allow access from you IP address (0.0.0.0/0 allos access from anywhere).
+4. Under **Network Access**, allow access from you IP address (0.0.0.0/0 allows access from anywhere).
 5. Get the **connection string** from **Database > Clusters > Drivers > Python**. It should look something like: `mongodb+srv://<username>:<password>@cluster0.mongodb.net/?retryWrites=true&w=majority`
 
 ### 2. Create a `.env` File
