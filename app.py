@@ -176,10 +176,10 @@ def add():
 
 @app.route("/search", methods=["GET"])
 def search():
-   user_episodes = db[current_user.id]
-   all_episodes = db.all_shows.find({}).sort("date", -1)
-   query = request.args.get("query")
-   if query:
+    user_episodes = db[current_user.id]
+    all_episodes = db.all_shows.find({}).sort("date", -1)
+    query = request.args.get("query")
+    if query:
         pattern = re.compile(re.escape(query), re.IGNORECASE)
         search_criteria = {
             "$or": [
@@ -202,7 +202,7 @@ def search():
             for show in results
         ]
         return render_template("results.html", all_episodes=shows)
-   return render_template("results.html", all_episodes=[])
+    return render_template("results.html", all_episodes=[])
 
 @app.route("/delete", methods=["GET", "POST"])
 def delete():
