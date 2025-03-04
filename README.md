@@ -33,7 +33,7 @@ The TV Show Tracker application provides users with a simple and intuitive platf
 
 ### Prerequisites
 
-Before setting up the app, ensure you have the following installed:\
+Before setting up the app, ensure you have the following installed:
 - **Python 3.8+**
 - **pip**
 - **Virtual Environment (pipenv or venv)**
